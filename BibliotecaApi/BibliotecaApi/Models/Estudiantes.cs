@@ -9,7 +9,7 @@ public record EstudiantesRecordSet(
 );
 
 public record EstudiantesRecordGet(
-    int EstudianteId,
+    long EstudianteId,
     string Matricula,
     string Nombres,
     string Telefono,

@@ -1,4 +1,13 @@
+using BibliotecaApi.Services;
+using Scalar.AspNetCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<EstudiantesServices>();
+builder.Services.AddScoped<LibrosService>();
+builder.Services.AddScoped<PrestamosService>();
+builder.Services.AddScoped<DevolucionesService>();
+
 
 // Add services to the container.
 
@@ -8,11 +17,27 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+using (var scope = app.Services.CreateScope())
 {
-    app.MapOpenApi();
+    await scope.ServiceProvider
+        .GetRequiredService<EstudiantesServices>()
+        .InitializeAsync();
+
+    await scope.ServiceProvider
+        .GetRequiredService<LibrosService>()
+        .InitializeAsync();
+
+    await scope.ServiceProvider
+        .GetRequiredService<PrestamosService>()
+        .InitializeAsync();
+
+    await scope.ServiceProvider
+        .GetRequiredService<DevolucionesService>()
+        .InitializeAsync();
 }
+app.MapOpenApi();
+
+app.MapScalarApiReference();
 
 app.UseHttpsRedirection();
 

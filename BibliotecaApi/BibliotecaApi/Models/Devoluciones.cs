@@ -1,13 +1,13 @@
 ﻿namespace BibliotecaApi.Models
 {
     public record DevolucionesRecordSet(
-       int PrestamoId,
+       long PrestamoId,
        string? Observacion
    );
 
     public record DevolucionesRecordGet(
-        int DevolucionId,
-        int PrestamoId,
+        long DevolucionId,
+        long PrestamoId,
         string FechaDevolucion,
         string? Observacion
     );
